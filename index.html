@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VASTRA — Heritage Ethnic Wear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --crimson:#7B1D2E;
+  --crimson-dark:#4F0F1C;
+  --crimson-light:#A63347;
+  --gold:#C8922A;
+  --gold-light:#E8B84B;
+  --ivory:#FDF8F1;
+  --ivory-dark:#F4EDE0;
+  --cream:#EDE0CC;
+  --ink:#1C0A00;
+  --ink-soft:#4A2B18;
+  --muted:#8A6B52;
+  --border:#DDD0B8;
+  --white:#FFFFFF;
+  --ff-head:'Cormorant Garamond',Georgia,serif;
+  --ff-body:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--ivory);color:var(--ink);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--ivory-dark)}
+::-webkit-scrollbar-thumb{background:var(--crimson);border-radius:4px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;background:rgba(253,248,241,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--ff-head);font-size:1.8rem;font-weight:600;letter-spacing:.15em;color:var(--crimson);cursor:pointer}
+.nav-logo span{color:var(--gold);font-style:italic;font-size:0.8rem;letter-spacing:0.08em;margin-left:6px;}
+.nav-links{display:flex;gap:2rem;font-size:.85rem;letter-spacing:.08em;font-weight:500;color:var(--ink-soft)}
+.nav-links a{transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--crimson)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-icon{cursor:pointer;padding:8px;border-radius:50%;transition:background .2s;position:relative}
+.nav-icon:hover{background:var(--cream)}
+.cart-badge{position:absolute;top:2px;right:2px;background:var(--crimson);color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;display:none}
+.btn-admin{font-size:.75rem;letter-spacing:.1em;padding:6px 14px;border:1px solid var(--crimson);color:var(--crimson);border-radius:4px;cursor:pointer;font-family:var(--ff-body);transition:all .2s}
+.btn-admin:hover{background:var(--crimson);color:#fff}
+
+/* ── HERO ── */
+#shop-view{display:block}
+.hero{height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;margin-top:64px}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--crimson-dark) 0%,var(--crimson) 40%,#8B3A2A 100%)}
+.hero-pattern{position:absolute;inset:0;opacity:.08;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z' fill='none' stroke='%23fff' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='8' fill='none' stroke='%23fff' stroke-width='1'/%3E%3Cpath d='M30 0 L30 10 M30 50 L30 60 M0 30 L10 30 M50 30 L60 30' stroke='%23fff' stroke-width='.5'/%3E%3C/svg%3E");background-size:60px 60px}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 2rem;width:100%}
+.hero-tag{font-size:.75rem;letter-spacing:.25em;color:var(--gold-light);font-weight:500;margin-bottom:1.5rem;text-transform:uppercase}
+.hero-title{font-family:var(--ff-head);font-size:clamp(3.5rem,8vw,6.5rem);font-weight:300;color:#fff;line-height:1.05;margin-bottom:1.5rem}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.7);max-width:420px;line-height:1.7;margin-bottom:2.5rem;font-weight:300}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;background:var(--gold);color:var(--ink);font-family:var(--ff-body);font-size:.85rem;letter-spacing:.1em;font-weight:500;border:none;cursor:pointer;border-radius:3px;transition:all .2s;text-transform:uppercase}
+.btn-primary:hover{background:var(--gold-light)}
+.btn-outline{padding:14px 32px;background:transparent;color:#fff;font-family:var(--ff-body);font-size:.85rem;letter-spacing:.1em;font-weight:500;border:1px solid rgba(255,255,255,.4);cursor:pointer;border-radius:3px;transition:all .2s;text-transform:uppercase}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.5);font-size:.7rem;letter-spacing:.15em;cursor:pointer}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.5),transparent);animation:scrollAnim 2s ease-in-out infinite}
+@keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.5);opacity:.5}}
+
+/* ── SECTION TITLES ── */
+.section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.section-head{text-align:center;margin-bottom:3.5rem}
+.section-tag{font-size:.7rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:500;margin-bottom:.75rem}
+.section-title{font-family:var(--ff-head);font-size:clamp(2rem,5vw,3.2rem);font-weight:400;color:var(--crimson-dark);line-height:1.1}
+.section-title em{font-style:italic;color:var(--crimson)}
+.divider{width:60px;height:2px;background:linear-gradient(to right,var(--gold),var(--gold-light));margin:1rem auto}
+
+/* ── FILTER BAR ── */
+.filter-bar{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.filter-btn{padding:8px 20px;border:1px solid var(--border);background:#fff;font-family:var(--ff-body);font-size:.8rem;letter-spacing:.08em;cursor:pointer;border-radius:40px;transition:all .2s;color:var(--ink-soft);font-weight:400}
+.filter-btn:hover,.filter-btn.active{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+
+/* ── PRODUCT GRID ── */
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2rem}
+.product-card{cursor:pointer;group:true}
+.product-img-wrap{position:relative;overflow:hidden;border-radius:4px;background:var(--cream);aspect-ratio:3/4;margin-bottom:1rem}
+.product-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;transition:transform .4s ease}
+.product-card:hover .product-img-inner{transform:scale(1.05)}
+.product-badge{position:absolute;top:12px;left:12px;background:var(--crimson);color:#fff;font-size:.65rem;letter-spacing:.1em;padding:3px 10px;border-radius:2px;font-weight:500}
+.product-wishlist{position:absolute;top:12px;right:12px;width:34px;height:34px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;opacity:0;transition:opacity .2s;border:none;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.product-card:hover .product-wishlist{opacity:1}
+.product-card:hover .product-wishlist:hover{background:var(--crimson);color:#fff}
+.quick-add{position:absolute;bottom:0;left:0;right:0;background:var(--crimson);color:#fff;text-align:center;padding:10px;font-size:.75rem;letter-spacing:.12em;font-weight:500;transform:translateY(100%);transition:transform .3s ease;cursor:pointer}
+.product-card:hover .quick-add{transform:translateY(0)}
+.product-name{font-family:var(--ff-head);font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:.25rem}
+.product-cat{font-size:.72rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:.5rem}
+.product-price{display:flex;align-items:baseline;gap:.5rem}
+.price-new{font-size:1rem;font-weight:500;color:var(--crimson)}
+.price-old{font-size:.85rem;color:var(--muted);text-decoration:line-through}
+.price-off{font-size:.75rem;color:var(--gold);font-weight:500}
+
+/* ── PRODUCT MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,10,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--ivory);max-width:900px;width:100%;border-radius:8px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;max-height:90vh;overflow-y:auto}
+.modal-img{background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:8rem;min-height:400px}
+.modal-info{padding:2.5rem 2rem;overflow-y:auto}
+.modal-close{position:absolute;top:1rem;right:1rem;background:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.modal-tag{font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem}
+.modal-name{font-family:var(--ff-head);font-size:2rem;font-weight:400;color:var(--crimson-dark);margin-bottom:.5rem;line-height:1.1}
+.modal-price-row{display:flex;align-items:baseline;gap:.75rem;margin:1rem 0}
+.modal-price{font-size:1.5rem;font-weight:500;color:var(--crimson)}
+.modal-mrp{font-size:1rem;color:var(--muted);text-decoration:line-through}
+.modal-off{font-size:.8rem;color:var(--gold);font-weight:500;background:var(--cream);padding:2px 8px;border-radius:3px}
+.modal-desc{font-size:.875rem;color:var(--ink-soft);line-height:1.7;margin-bottom:1.5rem}
+.modal-label{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;font-weight:500;color:var(--muted);margin-bottom:.5rem}
+.size-row,.color-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.size-btn{width:44px;height:44px;border:1px solid var(--border);background:#fff;font-size:.8rem;cursor:pointer;border-radius:3px;font-family:var(--ff-body);transition:all .15s;font-weight:400}
+.size-btn:hover,.size-btn.sel{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.color-btn{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);cursor:pointer;transition:all .15s;position:relative}
+.color-btn.sel{border-color:var(--crimson);box-shadow:0 0 0 2px var(--ivory),0 0 0 4px var(--crimson)}
+.qty-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.qty-ctrl{display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:3px;overflow:hidden}
+.qty-btn{width:36px;height:36px;border:none;background:#fff;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.qty-btn:hover{background:var(--cream)}
+.qty-num{width:48px;height:36px;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);background:#fff;text-align:center;font-family:var(--ff-body);font-size:.9rem}
+.btn-cart{width:100%;padding:15px;background:var(--crimson);color:#fff;border:none;font-family:var(--ff-body);font-size:.85rem;letter-spacing:.15em;font-weight:500;cursor:pointer;border-radius:3px;transition:background .2s;text-transform:uppercase}
+.btn-cart:hover{background:var(--crimson-dark)}
+
+/* ── CART SIDEBAR ── */
+.cart-sidebar{position:fixed;top:0;right:-420px;width:420px;max-width:100vw;height:100vh;background:var(--ivory);z-index:1100;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,.12);display:flex;flex-direction:column}
+.cart-sidebar.open{right:0}
+.cart-header{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.cart-title{font-family:var(--ff-head);font-size:1.5rem;font-weight:400;color:var(--crimson-dark)}
+.cart-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--muted);padding:4px}
+.cart-items{flex:1;overflow-y:auto;padding:1rem 1.5rem}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cart-empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.4}
+.cart-item{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border)}
+.cart-item-img{width:72px;height:90px;background:var(--cream);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:var(--ff-head);font-size:1rem;font-weight:400;margin-bottom:.2rem;color:var(--ink)}
+.cart-item-meta{font-size:.75rem;color:var(--muted);margin-bottom:.5rem}
+.cart-item-price{font-size:.9rem;font-weight:500;color:var(--crimson)}
+.cart-item-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.75rem;letter-spacing:.05em;text-decoration:underline;margin-top:.25rem;display:block;font-family:var(--ff-body)}
+.cart-footer{padding:1.5rem;border-top:1px solid var(--border)}
+.cart-subtotal{display:flex;justify-content:space-between;margin-bottom:.5rem;font-size:.9rem}
+.cart-total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:500;margin-bottom:1.5rem;color:var(--crimson-dark)}
+.btn-checkout{width:100%;padding:15px;background:var(--crimson);color:#fff;border:none;font-family:var(--ff-body);font-size:.85rem;letter-spacing:.15em;cursor:pointer;border-radius:3px;transition:background .2s;font-weight:500;text-transform:uppercase}
+.btn-checkout:hover{background:var(--crimson-dark)}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:1099;display:none}
+.cart-overlay.open{display:block}
+
+/* ── MARQUEE STRIP ── */
+.marquee-strip{background:var(--crimson);color:#fff;padding:10px 0;overflow:hidden;white-space:nowrap}
+.marquee-inner{display:inline-flex;gap:0;animation:marquee 20s linear infinite}
+.marquee-item{padding:0 2rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase}
+.marquee-dot{color:var(--gold-light);margin-right:2rem}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── ABOUT STRIP ── */
+.about-strip{background:var(--crimson-dark);padding:4rem 2rem;text-align:center}
+.about-strip h2{font-family:var(--ff-head);font-size:clamp(1.8rem,4vw,3rem);font-weight:300;color:#fff;margin-bottom:1rem;line-height:1.2}
+.about-strip h2 em{font-style:italic;color:var(--gold-light)}
+.about-strip p{color:rgba(255,255,255,.7);max-width:600px;margin:0 auto;line-height:1.8;font-size:.9rem;font-weight:300}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:3rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem}
+.footer-brand{font-family:var(--ff-head);font-size:1.6rem;color:#fff;letter-spacing:.1em;margin-bottom:.75rem}
+.footer-brand span{color:var(--gold-light);font-style:italic;font-size:0.8rem;letter-spacing:0.08em;margin-left:6px;}
+.footer-desc{font-size:.82rem;line-height:1.7;color:rgba(255,255,255,.5);max-width:280px}
+.footer-col h4{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem;font-weight:500}
+.footer-col a{display:block;font-size:.82rem;margin-bottom:.5rem;cursor:pointer;transition:color .2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{max-width:1200px;margin:2rem auto 0;border-top:1px solid rgba(255,255,255,.1);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;flex-wrap:gap}
+
+/* ══════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════ */
+#admin-view{display:none;background:var(--ivory);min-height:100vh}
+.admin-nav{position:fixed;top:0;left:0;right:0;z-index:900;background:var(--crimson-dark);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem}
+.admin-brand{font-family:var(--ff-head);font-size:1.2rem;color:#fff;letter-spacing:.1em}
+.admin-brand span{color:var(--gold-light);font-size:.8rem;letter-spacing:.2em;margin-left:.5rem;font-family:var(--ff-body);font-weight:300}
+.btn-back{font-size:.75rem;letter-spacing:.1em;padding:6px 16px;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:4px;cursor:pointer;font-family:var(--ff-body);background:transparent;transition:all .2s}
+.btn-back:hover{background:rgba(255,255,255,.1)}
+.admin-layout{display:flex;padding-top:56px;min-height:100vh}
+.admin-sidebar{width:220px;flex-shrink:0;background:var(--crimson-dark);padding:1.5rem 0;position:fixed;left:0;top:56px;bottom:0;overflow-y:auto}
+.sidebar-item{display:flex;align-items:center;gap:.75rem;padding:12px 1.5rem;font-size:.82rem;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;letter-spacing:.05em}
+.sidebar-item:hover,.sidebar-item.active{color:#fff;background:rgba(255,255,255,.08)}
+.sidebar-item.active{border-right:2px solid var(--gold)}
+.sidebar-icon{font-size:1rem;width:20px;text-align:center}
+.admin-main{margin-left:220px;flex:1;padding:2rem;background:var(--ivory)}
+
+/* Admin stat cards */
+.a-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+.a-stat{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.25rem;position:relative;overflow:hidden}
+.a-stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--crimson)}
+.a-stat-num{font-size:1.75rem;font-weight:600;color:var(--ink);margin-bottom:.25rem;font-family:var(--ff-head)}
+.a-stat-label{font-size:.75rem;color:var(--muted);letter-spacing:.05em}
+.a-stat-delta{font-size:.7rem;color:#2E8B57;margin-top:.25rem}
+
+/* Admin table */
+.a-card{background:#fff;border:1px solid var(--border);border-radius:6px;padding:1.5rem;margin-bottom:1.5rem}
+.a-card-title{font-family:var(--ff-head);font-size:1.2rem;font-weight:500;color:var(--crimson-dark);margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.a-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.a-table th{text-align:left;padding:10px 12px;background:var(--ivory-dark);color:var(--muted);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--border)}
+.a-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--ink-soft)}
+.a-table tr:last-child td{border-bottom:none}
+.a-table tr:hover td{background:var(--ivory)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:500}
+.badge-green{background:#E8F5E9;color:#2E7D32}
+.badge-amber{background:#FFF8E1;color:#F57F17}
+.badge-red{background:#FFEBEE;color:#C62828}
+.tbl-actions{display:flex;gap:.5rem}
+.tbl-btn{padding:4px 10px;font-size:.7rem;border-radius:3px;cursor:pointer;font-family:var(--ff-body);border:1px solid var(--border);background:#fff;transition:all .15s}
+.tbl-btn:hover{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.tbl-btn.danger:hover{background:#C62828;border-color:#C62828}
+
+/* Admin form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.form-input{padding:9px 12px;border:1px solid var(--border);border-radius:4px;font-size:.875rem;font-family:var(--ff-body);background:#fff;color:var(--ink);transition:border-color .2s;width:100%}
+.form-input:focus{outline:none;border-color:var(--crimson)}
+.form-select{padding:9px 12px;border:1px solid var(--border);border-radius:4px;font-size:.875rem;font-family:var(--ff-body);background:#fff;color:var(--ink);width:100%;appearance:none;cursor:pointer}
+.pill-group{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.25rem}
+.pill{padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:.75rem;cursor:pointer;transition:all .15s;user-select:none;font-family:var(--ff-body)}
+.pill.sel{background:var(--crimson);color:#fff;border-color:var(--crimson)}
+.form-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.btn-submit{padding:10px 24px;background:var(--crimson);color:#fff;border:none;border-radius:4px;font-family:var(--ff-body);font-size:.82rem;letter-spacing:.08em;cursor:pointer;transition:background .2s;font-weight:500}
+.btn-submit:hover{background:var(--crimson-dark)}
+.btn-ghost{padding:10px 20px;background:transparent;border:1px solid var(--border);border-radius:4px;font-family:var(--ff-body);font-size:.82rem;cursor:pointer;color:var(--muted);transition:all .15s}
+.btn-ghost:hover{border-color:var(--crimson);color:var(--crimson)}
+
+/* Bulk upload */
+.drop-zone{border:2px dashed var(--border);border-radius:6px;padding:3rem;text-align:center;cursor:pointer;transition:all .2s;background:#fff}
+.drop-zone:hover,.drop-zone.over{border-color:var(--crimson);background:rgba(123,29,46,.03)}
+.drop-icon{font-size:2.5rem;margin-bottom:.75rem;opacity:.5}
+.drop-title{font-size:1rem;font-weight:500;margin-bottom:.35rem;color:var(--ink)}
+.drop-sub{font-size:.8rem;color:var(--muted)}
+.csv-preview{margin-top:1.25rem;overflow-x:auto}
+.notice{padding:10px 14px;border-radius:4px;font-size:.82rem;margin-bottom:.75rem;border-left:3px solid}
+.notice-success{background:#E8F5E9;color:#2E7D32;border-color:#4CAF50}
+.notice-warn{background:#FFF8E1;color:#E65100;border-color:#FF9800}
+.notice-info{background:#E3F2FD;color:#1565C0;border-color:#2196F3}
+.template-code{background:var(--ivory-dark);border:1px solid var(--border);border-radius:4px;padding:1rem;font-family:monospace;font-size:.75rem;color:var(--ink-soft);overflow-x:auto;white-space:pre;margin-bottom:1rem}
+
+/* Admin sub tabs */
+.sub-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:1.5rem}
+.sub-tab{padding:10px 20px;font-size:.82rem;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;font-family:var(--ff-body)}
+.sub-tab:hover{color:var(--crimson)}
+.sub-tab.active{color:var(--crimson);border-color:var(--crimson);font-weight:500}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--crimson-dark);color:#fff;padding:12px 24px;border-radius:6px;font-size:.85rem;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:300px}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .modal{grid-template-columns:1fr}
+  .modal-img{min-height:250px;font-size:5rem}
+  .a-stats{grid-template-columns:1fr 1fr}
+  .admin-sidebar{display:none}
+  .admin-main{margin-left:0}
+  .footer-inner{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════ SHOP VIEW ══════ -->
+<div id="shop-view">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="scrollToTop()">VASTRA<span>By Nirmal</span></div>
+      <div class="nav-links">
+        <a onclick="scrollToShop()">Shop</a>
+        <a onclick="scrollToShop()">Kurtas</a>
+        <a onclick="scrollToShop()">Sarees</a>
+        <a onclick="scrollToShop()">Lehengas</a>
+        <a>About</a>
+      </div>
+      <div class="nav-right">
+        <div class="nav-icon" onclick="openCart()" title="Cart">
+          🛒
+          <span class="cart-badge" id="cart-badge">0</span>
+        </div>
+        <button class="btn-admin" onclick="openAdmin()">Admin ↗</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-content">
+      <div class="hero-tag">New Collection — Summer 2025</div>
+      <h1 class="hero-title">Wear the<br><em>heritage</em><br>of India.</h1>
+      <p class="hero-sub">Handcrafted ethnic wear that honours centuries of tradition — designed for the modern soul.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="scrollToShop()">Shop Collection</button>
+        <button class="btn-outline">Our Story</button>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="scrollToShop()">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner" id="marquee">
+      <span class="marquee-item">Free shipping above ₹999 <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Handwoven Fabrics <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Easy 7-Day Returns <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">COD Available <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">New Arrivals Every Week <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Free shipping above ₹999 <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Handwoven Fabrics <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Easy 7-Day Returns <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">COD Available <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">New Arrivals Every Week <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <!-- SHOP SECTION -->
+  <div id="shop-section" class="section">
+    <div class="section-head">
+      <div class="section-tag">Our Collection</div>
+      <h2 class="section-title">Timeless <em>Elegance,</em><br>Curated for You</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="filter-bar" id="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts(this,'all')">All</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Kurta')">Kurtas</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Saree')">Sarees</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Lehenga')">Lehengas</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Sherwani')">Sherwanis</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Anarkali')">Anarkalis</button>
+      <button class="filter-btn" onclick="filterProducts(this,'Dupatta')">Dupattas</button>
+    </div>
+
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+
+  <!-- ABOUT STRIP -->
+  <div class="about-strip">
+    <h2>Crafted with <em>love</em>,<br>rooted in tradition</h2>
+    <p style="margin-top:1rem">Every piece at VASTRA is a story — of artisans, of generations, of threads woven with intent. We source directly from weavers across Rajasthan, Varanasi, and Gujarat so you wear something truly authentic.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">VASTRA<span>By Nirmal</span></div>
+        <p class="footer-desc">Heritage ethnic wear for the modern Indian. Authentic fabrics, ethical sourcing, timeless designs.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a>New Arrivals</a>
+        <a>Kurtas</a>
+        <a>Sarees</a>
+        <a>Lehengas</a>
+        <a>Sale</a>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <a>Shipping Policy</a>
+        <a>Returns</a>
+        <a>Size Guide</a>
+        <a>Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 VASTRA. All rights reserved.</span>
+      <span>Made with ♥ in India</span>
+    </div>
+  </footer>
+
+</div><!-- /shop-view -->
+
+<!-- ══════ CART SIDEBAR ══════ -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <div class="cart-title">Your Bag</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-subtotal">₹0</span></div>
+    <div class="cart-subtotal"><span>Shipping</span><span style="color:#2E8B57">FREE</span></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total">₹0</span></div>
+    <button class="btn-checkout">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- ══════ PRODUCT MODAL ══════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <button class="modal-close" onclick="closeModalDirect()" style="position:fixed;top:2rem;right:2rem">✕</button>
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<!-- ══════ ADMIN VIEW ══════ -->
+<div id="admin-view">
+  <div class="admin-nav">
+    <div class="admin-brand">VASTRA <span>ADMIN PANEL</span></div>
+    <button class="btn-back" onclick="closeAdmin()">← Back to Store</button>
+  </div>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+      <div class="sidebar-item active" onclick="adminSection('dashboard',this)"><span class="sidebar-icon">📊</span>Dashboard</div>
+      <div class="sidebar-item" onclick="adminSection('add',this)"><span class="sidebar-icon">➕</span>Add Product</div>
+      <div class="sidebar-item" onclick="adminSection('bulk',this)"><span class="sidebar-icon">📤</span>Bulk Upload</div>
+      <div class="sidebar-item" onclick="adminSection('products',this)"><span class="sidebar-icon">🛍️</span>All Products</div>
+      <div class="sidebar-item" onclick="adminSection('orders',this)"><span class="sidebar-icon">📦</span>Orders</div>
+    </div>
+    <!-- Main -->
+    <div class="admin-main" id="admin-main"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════
+// DATA
+// ════════════════════════════
+var products = [
+  {id:1,name:"Bandhani Kurta",cat:"Kurta",price:1299,mrp:1899,stock:48,sizes:["S","M","L","XL"],colors:["#C8922A","#7B1D2E","#2C5F8A"],desc:"Hand-dyed Bandhani kurta from Rajasthan. 100% pure cotton. Ideal for festive occasions.",gender:"Men",sku:"BAN-KUR-001",emoji:"👔",badge:"Bestseller"},
+  {id:2,name:"Banarasi Silk Saree",cat:"Saree",price:4999,mrp:7499,stock:12,sizes:["Free Size"],colors:["#8B0000","#1A237E","#4A148C"],desc:"Pure Banarasi silk saree with zari work. Comes with matching blouse piece. A timeless classic.",gender:"Women",sku:"BAN-SAR-001",emoji:"👘",badge:"New"},
+  {id:3,name:"Lehenga Choli Set",cat:"Lehenga",price:5499,mrp:8999,stock:20,sizes:["XS","S","M","L","XL"],colors:["#880E4F","#FF6F00","#1B5E20"],desc:"Embroidered lehenga choli with dupatta. Georgette fabric with mirror work. Perfect for weddings.",gender:"Women",sku:"LEH-CHO-002",emoji:"👗",badge:"New"},
+  {id:4,name:"Nehru Jacket",cat:"Kurta",price:1799,mrp:2599,stock:35,sizes:["S","M","L","XL","XXL"],colors:["#212121","#3E2723","#1A237E"],desc:"Printed Nehru jacket in silk blend. Versatile layering piece for ethnic or casual outfits.",gender:"Men",sku:"NEH-JAC-003",emoji:"🧥",badge:null},
+  {id:5,name:"Anarkali Suit",cat:"Anarkali",price:2799,mrp:3999,stock:22,sizes:["XS","S","M","L"],colors:["#880E4F","#4E342E","#006064"],desc:"Floor-length Anarkali suit with churidar and dupatta. Georgette fabric with intricate embroidery.",gender:"Women",sku:"ANK-SUI-001",emoji:"👗",badge:"Trending"},
+  {id:6,name:"Jodhpuri Sherwani",cat:"Sherwani",price:6999,mrp:9999,stock:8,sizes:["S","M","L","XL"],colors:["#F5F5DC","#1A237E","#212121"],desc:"Regal Jodhpuri sherwani with churidar. Perfect for weddings and baraat. Available in 3 colours.",gender:"Men",sku:"JOD-SHE-001",emoji:"🤵",badge:"Premium"},
+  {id:7,name:"Kantha Stitch Dupatta",cat:"Dupatta",price:699,mrp:999,stock:75,sizes:["Free Size"],colors:["#F5F5DC","#FFB74D","#EF9A9A"],desc:"Hand-stitched Kantha dupatta from West Bengal. Lightweight cotton. Pairs with any ethnic outfit.",gender:"Women",sku:"KAN-DUP-001",emoji:"🧣",badge:null},
+  {id:8,name:"Straight Kurta Set",cat:"Kurta",price:1899,mrp:2699,stock:40,sizes:["XS","S","M","L","XL","XXL"],colors:["#FFFDE7","#E8F5E9","#E3F2FD"],desc:"Cotton straight kurta with palazzo pants. Airy summer fabric. Block print design.",gender:"Women",sku:"STR-KUR-002",emoji:"👚",badge:"New"},
+];
+
+var cart = [];
+var currentFilter = 'all';
+
+// ════════════════════════════
+// SHOP — RENDER PRODUCTS
+// ════════════════════════════
+function renderProducts(filter){
+  filter = filter || currentFilter;
+  var list = filter==='all' ? products : products.filter(p=>p.cat===filter);
+  var grid = document.getElementById('product-grid');
+  if(!list.length){grid.innerHTML='<div style="text-align:center;grid-column:1/-1;padding:3rem;color:var(--muted)">No products in this category yet.</div>';return;}
+  grid.innerHTML = list.map(function(p){
+    var disc = p.mrp>p.price ? Math.round((1-p.price/p.mrp)*100) : 0;
+    return '<div class="product-card" onclick="openProduct('+p.id+')">'
+      +'<div class="product-img-wrap">'
+      +(p.badge?'<div class="product-badge">'+p.badge+'</div>':'')
+      +'<button class="product-wishlist" onclick="event.stopPropagation();wishlist(\''+p.name+'\')">♡</button>'
+      +'<div class="product-img-inner">'+p.emoji+'</div>'
+      +'<div class="quick-add" onclick="event.stopPropagation();quickAdd('+p.id+')">+ Add to bag</div>'
+      +'</div>'
+      +'<div class="product-cat">'+p.cat+' · '+p.gender+'</div>'
+      +'<div class="product-name">'+p.name+'</div>'
+      +'<div class="product-price">'
+      +'<span class="price-new">₹'+p.price.toLocaleString('en-IN')+'</span>'
+      +(disc?'<span class="price-old">₹'+p.mrp.toLocaleString('en-IN')+'</span><span class="price-off">'+disc+'% off</span>':'')
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function filterProducts(btn, cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = cat;
+  renderProducts(cat);
+}
+
+function scrollToShop(){document.getElementById('shop-section').scrollIntoView({behavior:'smooth'})}
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'})}
+
+// ════════════════════════════
+// PRODUCT MODAL
+// ════════════════════════════
+var selSize={}, selColors={}, selQty={};
+
+function openProduct(id){
+  var p = products.find(function(x){return x.id===id});
+  if(!p) return;
+  selSize[id] = p.sizes[0]||'';
+  selColors[id] = 0;
+  selQty[id] = 1;
+  var disc = p.mrp>p.price ? Math.round((1-p.price/p.mrp)*100) : 0;
+  var sizeHTML = p.sizes.map(function(s){
+    return '<button class="size-btn'+(s===selSize[id]?' sel':'')+'" onclick="pickSize('+id+',\''+s+'\',this)">'+s+'</button>';
+  }).join('');
+  var colHTML = p.colors.map(function(c,i){
+    return '<div class="color-btn'+(i===0?' sel':'')+'" style="background:'+c+'" onclick="pickColor('+id+','+i+',this)" title="'+c+'"></div>';
+  }).join('');
+
+  document.getElementById('modal-content').innerHTML =
+    '<div class="modal-img"><div style="font-size:8rem">'+p.emoji+'</div></div>'
+    +'<div class="modal-info">'
+    +'<div class="modal-tag">'+p.cat+' — '+p.gender+'</div>'
+    +'<div class="modal-name">'+p.name+'</div>'
+    +'<div class="modal-price-row">'
+    +'<span class="modal-price">₹'+p.price.toLocaleString('en-IN')+'</span>'
+    +(disc?'<span class="modal-mrp">₹'+p.mrp.toLocaleString('en-IN')+'</span><span class="modal-off">'+disc+'% off</span>':'')
+    +'</div>'
+    +'<p class="modal-desc">'+p.desc+'</p>'
+    +'<div class="modal-label">Select Size</div>'
+    +'<div class="size-row">'+sizeHTML+'</div>'
+    +'<div class="modal-label">Select Colour</div>'
+    +'<div class="color-row">'+colHTML+'</div>'
+    +'<div class="modal-label">Quantity</div>'
+    +'<div class="qty-row">'
+    +'<div class="qty-ctrl">'
+    +'<button class="qty-btn" onclick="changeQty('+id+',-1)">−</button>'
+    +'<input class="qty-num" id="qty-'+id+'" value="1" readonly>'
+    +'<button class="qty-btn" onclick="changeQty('+id+',1)">+</button>'
+    +'</div>'
+    +'<span style="font-size:.8rem;color:var(--muted)">'+p.stock+' in stock</span>'
+    +'</div>'
+    +'<button class="btn-cart" onclick="addToCart('+id+')">Add to Bag</button>'
+    +'<div style="font-size:.75rem;color:var(--muted);margin-top:.75rem;text-align:center">Free shipping · Easy returns · COD available</div>'
+    +'</div>';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function pickSize(id, s, el){
+  selSize[id]=s;
+  el.closest('.size-row').querySelectorAll('.size-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function pickColor(id, i, el){
+  selColors[id]=i;
+  el.closest('.color-row').querySelectorAll('.color-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function changeQty(id, delta){
+  var p = products.find(function(x){return x.id===id});
+  selQty[id] = Math.max(1, Math.min(p.stock, (selQty[id]||1)+delta));
+  document.getElementById('qty-'+id).value = selQty[id];
+}
+function closeModal(e){if(e.target.id==='modal-overlay') closeModalDirect()}
+function closeModalDirect(){document.getElementById('modal-overlay').classList.remove('open');document.body.style.overflow=''}
+
+// ════════════════════════════
+// CART
+// ════════════════════════════
+function addToCart(id){
+  var p = products.find(function(x){return x.id===id});
+  var size = selSize[id]||p.sizes[0];
+  var qty = selQty[id]||1;
+  var key = id+'-'+size;
+  var existing = cart.find(function(c){return c.key===key});
+  if(existing) existing.qty = Math.min(existing.qty+qty, p.stock);
+  else cart.push({key:key, id:id, name:p.name, price:p.price, size:size, qty:qty, emoji:p.emoji, cat:p.cat});
+  closeModalDirect();
+  renderCart();
+  openCart();
+  showToast(p.name+' added to your bag!');
+}
+
+function quickAdd(id){
+  var p = products.find(function(x){return x.id===id});
+  var key = id+'-'+p.sizes[0];
+  var existing = cart.find(function(c){return c.key===key});
+  if(existing) existing.qty++;
+  else cart.push({key:key, id:id, name:p.name, price:p.price, size:p.sizes[0], qty:1, emoji:p.emoji, cat:p.cat});
+  renderCart();
+  openCart();
+  showToast(p.name+' added!');
+}
+
+function removeFromCart(key){
+  cart = cart.filter(function(c){return c.key!==key});
+  renderCart();
+}
+
+function renderCart(){
+  var itemsEl = document.getElementById('cart-items');
+  var badge = document.getElementById('cart-badge');
+  var totalItems = cart.reduce(function(s,c){return s+c.qty},0);
+  badge.textContent = totalItems;
+  badge.style.display = totalItems?'flex':'none';
+
+  if(!cart.length){
+    itemsEl.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🛍</div><div style="font-size:.95rem;font-weight:500;margin-bottom:.5rem">Your bag is empty</div><div style="font-size:.82rem;color:var(--muted)">Explore our collection and add something beautiful.</div></div>';
+    document.getElementById('cart-footer').style.display='none';
+    return;
+  }
+  itemsEl.innerHTML = cart.map(function(c){
+    return '<div class="cart-item">'
+      +'<div class="cart-item-img">'+c.emoji+'</div>'
+      +'<div class="cart-item-info">'
+      +'<div class="cart-item-name">'+c.name+'</div>'
+      +'<div class="cart-item-meta">Size: '+c.size+' · Qty: '+c.qty+'</div>'
+      +'<div class="cart-item-price">₹'+(c.price*c.qty).toLocaleString('en-IN')+'</div>'
+      +'<button class="cart-item-remove" onclick="removeFromCart(\''+c.key+'\')">Remove</button>'
+      +'</div></div>';
+  }).join('');
+  var total = cart.reduce(function(s,c){return s+c.price*c.qty},0);
+  document.getElementById('cart-subtotal').textContent='₹'+total.toLocaleString('en-IN');
+  document.getElementById('cart-total').textContent='₹'+total.toLocaleString('en-IN');
+  document.getElementById('cart-footer').style.display='block';
+}
+
+function openCart(){document.getElementById('cart-sidebar').classList.add('open');document.getElementById('cart-overlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeCart(){document.getElementById('cart-sidebar').classList.remove('open');document.getElementById('cart-overlay').classList.remove('open');document.body.style.overflow=''}
+function wishlist(name){showToast(name+' added to wishlist ♡')}
+
+// ════════════════════════════
+// ADMIN PANEL
+// ════════════════════════════
+function openAdmin(){document.getElementById('shop-view').style.display='none';document.getElementById('admin-view').style.display='block';document.body.style.overflow='';adminSection('dashboard',document.querySelector('.sidebar-item'))}
+function closeAdmin(){document.getElementById('admin-view').style.display='none';document.getElementById('shop-view').style.display='block'}
+
+var adminSections = {
+  dashboard: renderDashboard,
+  add: renderAddProduct,
+  bulk: renderBulkUpload,
+  products: renderAdminProducts,
+  orders: renderOrders
+};
+
+function adminSection(sec, el){
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.remove('active'));
+  if(el) el.classList.add('active');
+  var fn = adminSections[sec];
+  if(fn) fn();
+}
+
+// ── Dashboard ──
+function renderDashboard(){
+  var totalProducts = products.length;
+  var totalStock = products.reduce(function(s,p){return s+p.stock},0);
+  var lowStock = products.filter(function(p){return p.stock<15}).length;
+  document.getElementById('admin-main').innerHTML =
+    '<h2 style="font-family:var(--ff-head);font-size:1.6rem;font-weight:400;color:var(--crimson-dark);margin-bottom:1.5rem">Dashboard</h2>'
+    +'<div class="a-stats">'
+    +'<div class="a-stat"><div class="a-stat-num">'+totalProducts+'</div><div class="a-stat-label">Total Products</div><div class="a-stat-delta">↑ Active catalogue</div></div>'
+    +'<div class="a-stat"><div class="a-stat-num">'+totalStock+'</div><div class="a-stat-label">Units in Stock</div><div class="a-stat-delta">Across all SKUs</div></div>'
+    +'<div class="a-stat"><div class="a-stat-num" style="color:var(--crimson)">'+lowStock+'</div><div class="a-stat-label">Low Stock Items</div><div class="a-stat-delta" style="color:#E65100">Below 15 units</div></div>'
+    +'<div class="a-stat"><div class="a-stat-num">₹0</div><div class="a-stat-label">Revenue Today</div><div class="a-stat-delta">No orders yet</div></div>'
+    +'</div>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">Quick Actions</div>'
+    +'<div style="display:flex;gap:.75rem;flex-wrap:wrap">'
+    +'<button class="btn-submit" onclick="adminSection(\'add\',null)">+ Add New Product</button>'
+    +'<button class="btn-ghost" onclick="adminSection(\'bulk\',null)">📤 Bulk Upload CSV</button>'
+    +'<button class="btn-ghost" onclick="adminSection(\'products\',null)">🛍 View All Products</button>'
+    +'</div>'
+    +'</div>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">Low Stock Alert</div>'
+    +(products.filter(function(p){return p.stock<15}).map(function(p){
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)">'
+        +'<div><strong>'+p.name+'</strong> <span style="font-size:.75rem;color:var(--muted)">'+p.sku+'</span></div>'
+        +'<span class="badge badge-red">'+p.stock+' left</span>'
+        +'</div>';
+    }).join('')||'<div style="color:var(--muted);font-size:.85rem">All products have healthy stock levels.</div>')
+    +'</div>';
+}
+
+// ── Add Product ──
+var formSizes=["XS","S","M","L","XL","XXL","3XL","Free Size"];
+var formColors=["Black","White","Red","Gold","Navy","Pink","Green","Beige","Ivory","Crimson"];
+
+function renderAddProduct(){
+  document.getElementById('admin-main').innerHTML =
+    '<h2 style="font-family:var(--ff-head);font-size:1.6rem;font-weight:400;color:var(--crimson-dark);margin-bottom:1.5rem">Add New Product</h2>'
+    +'<div id="add-success" style="display:none" class="notice notice-success">✓ Product added successfully! View it in All Products.</div>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">Product Details</div>'
+    +'<div class="form-grid">'
+    +'<div class="form-group"><label class="form-label">Product Name *</label><input class="form-input" id="fn-name" placeholder="e.g. Banarasi Silk Kurta"></div>'
+    +'<div class="form-group"><label class="form-label">Category *</label><select class="form-select" id="fn-cat"><option value="">Select category...</option><option>Kurta</option><option>Saree</option><option>Lehenga</option><option>Sherwani</option><option>Anarkali</option><option>Dupatta</option><option>Jacket</option><option>Set</option></select></div>'
+    +'<div class="form-group"><label class="form-label">Selling Price (₹) *</label><input class="form-input" id="fn-price" type="number" placeholder="1299"></div>'
+    +'<div class="form-group"><label class="form-label">MRP / Original Price (₹)</label><input class="form-input" id="fn-mrp" type="number" placeholder="1999"></div>'
+    +'<div class="form-group"><label class="form-label">Stock Quantity</label><input class="form-input" id="fn-stock" type="number" placeholder="50"></div>'
+    +'<div class="form-group"><label class="form-label">SKU / Product Code</label><input class="form-input" id="fn-sku" placeholder="e.g. KUR-BAN-001"></div>'
+    +'<div class="form-group"><label class="form-label">Gender</label><select class="form-select" id="fn-gender"><option>Men</option><option>Women</option><option>Unisex</option></select></div>'
+    +'<div class="form-group"><label class="form-label">Badge Label</label><input class="form-input" id="fn-badge" placeholder="New / Bestseller / Trending"></div>'
+    +'<div class="form-group full"><label class="form-label">Description</label><textarea class="form-input" id="fn-desc" rows="3" placeholder="Fabric, occasion, special details..."></textarea></div>'
+    +'<div class="form-group full"><label class="form-label">Available Sizes</label><div class="pill-group" id="size-pills">'
+    +formSizes.map(function(s){return '<div class="pill'+(["S","M","L","XL"].includes(s)?' sel':'')+'" onclick="togglePill(this)">'+s+'</div>'}).join('')
+    +'</div></div>'
+    +'<div class="form-group full"><label class="form-label">Available Colours</label><div class="pill-group" id="color-pills">'
+    +formColors.map(function(c,i){return '<div class="pill'+(i<3?' sel':'')+'" onclick="togglePill(this)">'+c+'</div>'}).join('')
+    +'</div></div>'
+    +'<div class="form-group full"><label class="form-label">Product Images (uploads to cloud in real app)</label>'
+    +'<div style="border:2px dashed var(--border);border-radius:4px;padding:1.5rem;text-align:center;cursor:pointer;background:#fff" onclick="document.getElementById(\'img-in\').click()">'
+    +'<input type="file" id="img-in" multiple accept="image/*" style="display:none" onchange="handleImgSel(this)">'
+    +'<div style="font-size:1.5rem;margin-bottom:.5rem;opacity:.4">📷</div>'
+    +'<div style="font-size:.85rem;font-weight:500;margin-bottom:.25rem">Click to upload product images</div>'
+    +'<div id="img-sel-label" style="font-size:.75rem;color:var(--muted)">JPG, PNG, WEBP. First image becomes the main photo.</div>'
+    +'</div></div>'
+    +'</div>'
+    +'<div class="form-actions">'
+    +'<button class="btn-ghost" onclick="resetAddForm()">Clear Form</button>'
+    +'<button class="btn-submit" onclick="saveProduct()">Save Product →</button>'
+    +'</div></div>';
+}
+
+function togglePill(el){el.classList.toggle('sel')}
+function handleImgSel(input){var n=input.files.length;document.getElementById('img-sel-label').textContent=n+' image'+(n!==1?'s':'')+' selected.'}
+
+function resetAddForm(){['fn-name','fn-cat','fn-price','fn-mrp','fn-stock','fn-sku','fn-desc','fn-badge'].forEach(function(id){var el=document.getElementById(id);if(el)el.value=''})}
+
+var emojiMap={Kurta:'👔',Saree:'👘',Lehenga:'👗',Sherwani:'🤵',Anarkali:'👗',Dupatta:'🧣',Jacket:'🧥',Set:'👚'};
+
+function saveProduct(){
+  var name=(document.getElementById('fn-name').value||'').trim();
+  var cat=document.getElementById('fn-cat').value;
+  var price=parseFloat(document.getElementById('fn-price').value)||0;
+  var mrp=parseFloat(document.getElementById('fn-mrp').value)||price;
+  var stock=parseInt(document.getElementById('fn-stock').value)||0;
+  var sku=(document.getElementById('fn-sku').value||'PROD-'+Date.now()).trim();
+  var desc=(document.getElementById('fn-desc').value||'').trim();
+  var gender=document.getElementById('fn-gender').value;
+  var badge=(document.getElementById('fn-badge').value||'').trim();
+  if(!name||!cat||!price){showToast('Please fill Name, Category and Price.');return}
+  var sizes=[...document.querySelectorAll('#size-pills .sel')].map(function(el){return el.textContent});
+  products.push({id:products.length+1,name:name,cat:cat,price:price,mrp:mrp,stock:stock,sizes:sizes.length?sizes:['Free Size'],colors:['#7B1D2E'],desc:desc||'No description added.',gender:gender,sku:sku,emoji:emojiMap[cat]||'👕',badge:badge||null});
+  document.getElementById('add-success').style.display='block';
+  resetAddForm();
+  showToast('Product "'+name+'" saved!');
+  setTimeout(function(){var el=document.getElementById('add-success');if(el)el.style.display='none'},4000);
+}
+
+// ── Bulk Upload ──
+var csvImportRows=[];
+
+function renderBulkUpload(){
+  document.getElementById('admin-main').innerHTML =
+    '<h2 style="font-family:var(--ff-head);font-size:1.6rem;font-weight:400;color:var(--crimson-dark);margin-bottom:1.5rem">Bulk Product Upload</h2>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">How it works</div>'
+    +'<div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;font-size:.82rem;margin-bottom:1rem">'
+    +'<span style="padding:5px 14px;background:var(--crimson);color:#fff;border-radius:20px;font-size:.75rem">1. Download template</span>'
+    +'<span style="color:var(--muted)">→</span>'
+    +'<span style="padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:.75rem">2. Fill your products</span>'
+    +'<span style="color:var(--muted)">→</span>'
+    +'<span style="padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:.75rem">3. Upload CSV</span>'
+    +'<span style="color:var(--muted)">→</span>'
+    +'<span style="padding:5px 14px;border:1px solid var(--border);border-radius:20px;font-size:.75rem">4. Done!</span>'
+    +'</div>'
+    +'<div class="notice notice-info">Each row in the CSV = one product. You can upload 1 to 10,000 products at once.</div>'
+    +'</div>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">CSV Format</div>'
+    +'<div class="template-code">name,category,price,mrp,stock,sizes,colors,gender,description,sku,badge\nBanarasi Kurta,Kurta,1299,1899,50,"S,M,L,XL","Red,Gold,Navy",Men,Pure silk Banarasi kurta with zari work,BAN-KUR-001,Bestseller\nKantha Dupatta,Dupatta,699,999,80,Free Size,"Ivory,Beige",Women,Hand-stitched Kantha from West Bengal,KAN-DUP-001,\nWedding Sherwani,Sherwani,6999,9999,15,"S,M,L","Ivory,Gold",Men,Full wedding sherwani set with accessories,SHE-WED-001,New</div>'
+    +'<button class="btn-ghost" onclick="downloadTemplate()" style="font-size:.8rem">↓ Download template.csv</button>'
+    +'</div>'
+    +'<div class="a-card">'
+    +'<div class="a-card-title">Upload Your CSV</div>'
+    +'<div class="drop-zone" id="bulk-drop" ondragover="event.preventDefault();this.classList.add(\'over\')" ondragleave="this.classList.remove(\'over\')" ondrop="handleBulkDrop(event)" onclick="document.getElementById(\'bulk-csv\').click()">'
+    +'<input type="file" id="bulk-csv" accept=".csv" style="display:none" onchange="parseBulkCSV(this.files[0])">'
+    +'<div class="drop-icon">📄</div>'
+    +'<div class="drop-title" id="bulk-drop-title">Drop your CSV file here or click to browse</div>'
+    +'<div class="drop-sub">Supports .csv files only</div>'
+    +'</div>'
+    +'<div id="bulk-result" style="display:none;margin-top:1rem">'
+    +'<div class="notice notice-success" id="bulk-notice"></div>'
+    +'<div class="notice notice-warn" id="bulk-warn" style="display:none"></div>'
+    +'<div class="csv-preview" id="bulk-preview"></div>'
+    +'<div style="margin-top:1rem;display:flex;justify-content:flex-end"><button class="btn-submit" id="bulk-import-btn" onclick="importBulk()">Import All Products →</button></div>'
+    +'</div></div>';
+}
+
+function handleBulkDrop(e){e.preventDefault();document.getElementById('bulk-drop').classList.remove('over');parseBulkCSV(e.dataTransfer.files[0])}
+
+function parseBulkCSV(file){
+  if(!file||!file.name.endsWith('.csv')){showToast('Please upload a .csv file');return}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var lines=e.target.result.trim().split('\n');
+    var headers=lines[0].split(',').map(function(h){return h.trim().replace(/"/g,'')});
+    var rows=lines.slice(1).filter(function(l){return l.trim()}).map(function(line){
+      var vals=[]; var cur=''; var inQ=false;
+      for(var c of line){if(c==='"'){inQ=!inQ}else if(c===','&&!inQ){vals.push(cur.trim());cur=''}else cur+=c}
+      vals.push(cur.trim());
+      var obj={};
+      headers.forEach(function(h,i){obj[h]=(vals[i]||'').replace(/^"|"$/g,'')});
+      return obj;
+    });
+    csvImportRows=rows;
+    var good=rows.filter(function(r){return r.name&&r.price}).length;
+    var bad=rows.length-good;
+    document.getElementById('bulk-notice').textContent=good+' products ready to import from '+rows.length+' rows.';
+    document.getElementById('bulk-drop-title').textContent=file.name+' — '+rows.length+' rows found';
+    var warnEl=document.getElementById('bulk-warn');
+    if(bad>0){warnEl.textContent=bad+' rows have missing name/price and will be skipped.';warnEl.style.display='block'}else{warnEl.style.display='none'}
+    var preview=document.getElementById('bulk-preview');
+    var previewRows=rows.slice(0,4);
+    preview.innerHTML='<div style="font-size:.75rem;color:var(--muted);margin-bottom:.5rem">Preview — first '+Math.min(4,rows.length)+' of '+rows.length+' rows</div>'
+      +'<div style="overflow-x:auto"><table class="a-table"><thead><tr>'+headers.map(function(h){return '<th>'+h+'</th>'}).join('')+'</tr></thead>'
+      +'<tbody>'+previewRows.map(function(r){return '<tr>'+headers.map(function(h){return '<td>'+(r[h]||'—')+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';
+    document.getElementById('bulk-result').style.display='block';
+  };
+  reader.readAsText(file);
+}
+
+function importBulk(){
+  var added=0;
+  csvImportRows.forEach(function(r){
+    if(!r.name||!r.price) return;
+    products.push({
+      id:products.length+1, name:r.name, cat:r.category||'Kurta',
+      price:parseFloat(r.price)||0, mrp:parseFloat(r.mrp)||parseFloat(r.price)||0,
+      stock:parseInt(r.stock)||0,
+      sizes:(r.sizes||'Free Size').split(',').map(function(s){return s.trim()}).filter(Boolean),
+      colors:['#7B1D2E'],
+      gender:r.gender||'Unisex', sku:r.sku||('CSV-'+Date.now()+'-'+added),
+      desc:r.description||'', emoji:emojiMap[r.category]||'👕',
+      badge:r.badge||null
+    });
+    added++;
+  });
+  document.getElementById('bulk-notice').textContent='✓ '+added+' products imported successfully!';
+  document.getElementById('bulk-import-btn').textContent='Imported ✓';
+  document.getElementById('bulk-import-btn').disabled=true;
+  showToast(added+' products imported!');
+}
+
+function downloadTemplate(){
+  var csv='name,category,price,mrp,stock,sizes,colors,gender,description,sku,badge\nBanarasi Kurta,Kurta,1299,1899,50,"S,M,L,XL","Red,Gold,Navy",Men,Pure silk Banarasi kurta with zari work,BAN-KUR-001,Bestseller\nKantha Dupatta,Dupatta,699,999,80,Free Size,"Ivory,Beige",Women,Hand-stitched Kantha dupatta from West Bengal,KAN-DUP-001,';
+  var a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='vastra_product_template.csv';
+  a.click();
+  showToast('Template downloaded!');
+}
+
+// ── All Products ──
+function renderAdminProducts(){
+  document.getElementById('admin-main').innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">'
+    +'<h2 style="font-family:var(--ff-head);font-size:1.6rem;font-weight:400;color:var(--crimson-dark)">All Products</h2>'
+    +'<button class="btn-submit" onclick="adminSection(\'add\',null)">+ Add Product</button>'
+    +'</div>'
+    +'<div class="a-card" style="padding:0;overflow:hidden">'
+    +'<table class="a-table">'
+    +'<thead><tr><th>Product</th><th>Category</th><th>Price</th><th>MRP</th><th>Stock</th><th>SKU</th><th>Status</th><th>Actions</th></tr></thead>'
+    +'<tbody>'
+    +products.map(function(p){
+      var stockBadge=p.stock<10?'badge-red':p.stock<20?'badge-amber':'badge-green';
+      var stockLabel=p.stock<10?'Low Stock':p.stock<20?'Watch':p.stock+' units';
+      return '<tr>'
+        +'<td style="display:flex;align-items:center;gap:.5rem;font-weight:500"><span style="font-size:1.2rem">'+p.emoji+'</span>'+p.name+'</td>'
+        +'<td>'+p.cat+'</td>'
+        +'<td>₹'+p.price.toLocaleString('en-IN')+'</td>'
+        +'<td style="color:var(--muted);text-decoration:line-through">₹'+p.mrp.toLocaleString('en-IN')+'</td>'
+        +'<td><span class="badge '+stockBadge+'">'+stockLabel+'</span></td>'
+        +'<td style="font-family:monospace;font-size:.72rem;color:var(--muted)">'+p.sku+'</td>'
+        +'<td><span class="badge badge-green">Active</span></td>'
+        +'<td><div class="tbl-actions">'
+        +'<button class="tbl-btn" onclick="showToast(\'Edit coming soon!\')">Edit</button>'
+        +'<button class="tbl-btn danger" onclick="deleteProduct('+p.id+')">Delete</button>'
+        +'</div></td>'
+        +'</tr>';
+    }).join('')
+    +'</tbody></table></div>';
+}
+
+function deleteProduct(id){
+  if(!confirm('Delete this product? This cannot be undone.')) return;
+  products=products.filter(function(p){return p.id!==id});
+  showToast('Product deleted.');
+  renderAdminProducts();
+  renderProducts();
+}
+
+// ── Orders ──
+function renderOrders(){
+  document.getElementById('admin-main').innerHTML =
+    '<h2 style="font-family:var(--ff-head);font-size:1.6rem;font-weight:400;color:var(--crimson-dark);margin-bottom:1.5rem">Orders</h2>'
+    +'<div class="a-card">'
+    +'<div style="text-align:center;padding:3rem 1rem;color:var(--muted)">'
+    +'<div style="font-size:3rem;margin-bottom:1rem;opacity:.3">📦</div>'
+    +'<div style="font-size:1rem;font-weight:500;margin-bottom:.5rem;color:var(--ink)">No orders yet</div>'
+    +'<div style="font-size:.85rem">When customers place orders, they will appear here. Connect a payment gateway (Razorpay) to start accepting orders.</div>'
+    +'</div></div>';
+}
+
+// ════════════════════════════
+// TOAST
+// ════════════════════════════
+var toastTimer;
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show')},3000);
+}
+
+// ════════════════════════════
+// INIT
+// ════════════════════════════
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
